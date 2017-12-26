@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2017 Red Hat, Inc. and/or its affiliates.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>it.redhat.demo</groupId>
+    <artifactId>ogm-wildfly-infinispan-clusteredcounter</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <!-- with Hibernate OGM versions -->
+        <version.hibernate.ogm>5.2.0-SNAPSHOT</version.hibernate.ogm>
+
+        <!-- This properties must be the same of hibernate-ogm-bom -->
+        <version.hibernate.orm>5.1.10.Final</version.hibernate.orm>
+        <version.hibernate.search>5.6.4.Final</version.hibernate.search>
+        <version.infinispan>9.1.4.Final</version.infinispan>
+        <version.wildfly>11.0.0.Final</version.wildfly>
+
+        <classifier.hibernate.wildfly>wildfly-11-dist</classifier.hibernate.wildfly>
+
+        <!-- managed server directories -->
+        <jboss.home>${project.build.directory}/wildfly-${version.wildfly}</jboss.home>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- used for all hibernate / infinispan versions -->
+            <!-- installed as a static module layers -->
+            <dependency>
+                <groupId>org.hibernate.ogm</groupId>
+                <artifactId>hibernate-ogm-bom</artifactId>
+                <version>${version.hibernate.ogm}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- used for all other JEE frameworks version -->
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-javaee7-with-tools</artifactId>
+                <version>${version.wildfly}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-infinispan-embedded</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>clusteredcounter-demo</finalName>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <!-- DEPLOYMENT dependencies to JBoss static modules -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <Dependencies>org.hibernate.ogm:5.2 services, org.hibernate.ogm.infinispan-embedded:5.2 services</Dependencies>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- PROVISIONING Wildfly with modules: ORM, OGM, Search and Infinispan -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <artifactItems>
+                        <!-- Wildfly Application Server -->
+                        <artifactItem>
+                            <groupId>org.wildfly</groupId>
+                            <artifactId>wildfly-dist</artifactId>
+                            <version>${version.wildfly}</version>
+                            <type>zip</type>
+                            <overWrite>false</overWrite>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                        </artifactItem>
+
+                        <!-- Hibernate Ogm modules -->
+                        <artifactItem>
+                            <groupId>org.hibernate.ogm</groupId>
+                            <artifactId>hibernate-ogm-modules</artifactId>
+                            <classifier>${classifier.hibernate.wildfly}</classifier>
+                            <version>${version.hibernate.ogm}</version>
+                            <type>zip</type>
+                            <overWrite>false</overWrite>
+                            <outputDirectory>${jboss.home}/modules</outputDirectory>
+                        </artifactItem>
+
+                        <!-- Infinispan modules -->
+                        <artifactItem>
+                            <groupId>org.infinispan</groupId>
+                            <artifactId>infinispan-wildfly-modules</artifactId>
+                            <version>9.2.0.Beta2</version>
+                            <type>zip</type>
+                            <overWrite>false</overWrite>
+                            <outputDirectory>${jboss.home}/modules</outputDirectory>
+                        </artifactItem>
+
+                        <!-- Hibernate Search modules -->
+                        <artifactItem>
+                            <groupId>org.hibernate</groupId>
+                            <artifactId>hibernate-search-modules</artifactId>
+                            <version>${version.hibernate.search}</version>
+                            <!--
+                            We don't have a wildfly-11-dist version of the Hibernate Search 5.6 modules.
+                            Using the ones built for WildFly 10 will do so we hardcode the classifier here
+                            for now.
+                            -->
+                            <classifier>wildfly-10-dist</classifier>
+                            <type>zip</type>
+                            <overWrite>false</overWrite>
+                            <outputDirectory>${jboss.home}/modules</outputDirectory>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </plugin>
+
+            <!-- INTEGRATION TEST CONFIGURATION -->
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.20.1</version>
+                <executions>
+                    <execution>
+                        <id>run-embedded-wildfly-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <redirectTestOutputToFile>false</redirectTestOutputToFile>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
