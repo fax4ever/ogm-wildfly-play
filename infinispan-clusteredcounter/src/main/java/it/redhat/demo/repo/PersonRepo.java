@@ -22,11 +22,13 @@ public class PersonRepo {
 	@Inject
 	private EntityManager em;
 
-	public void add(String name, String surname) {
+	public Person add(String name, String surname) {
 
 		Person person = new Person(name, surname);
 
 		em.persist( person );
+
+		return person;
 
 	}
 

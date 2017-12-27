@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import it.redhat.demo.entity.JobPosition;
-import it.redhat.demo.entity.Person;
 
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
@@ -23,11 +22,13 @@ public class JobRepo {
 	@Inject
 	private EntityManager em;
 
-	public void add(String name, String surname) {
+	public JobPosition add(String name, String surname) {
 
 		JobPosition jobPosition = new JobPosition( name, surname );
 
 		em.persist( jobPosition );
+
+		return jobPosition;
 
 	}
 

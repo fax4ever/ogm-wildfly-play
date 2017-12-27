@@ -90,6 +90,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -151,22 +157,22 @@
                             <outputDirectory>${project.build.directory}</outputDirectory>
                         </artifactItem>
 
+                        <!-- Infinispan modules -->
+                        <artifactItem>
+                            <groupId>org.infinispan</groupId>
+                            <artifactId>infinispan-wildfly-modules</artifactId>
+                            <version>${version.infinispan}</version>
+                            <type>zip</type>
+                            <overWrite>false</overWrite>
+                            <outputDirectory>${jboss.home}/modules</outputDirectory>
+                        </artifactItem>
+
                         <!-- Hibernate Ogm modules -->
                         <artifactItem>
                             <groupId>org.hibernate.ogm</groupId>
                             <artifactId>hibernate-ogm-modules</artifactId>
                             <classifier>${classifier.hibernate.wildfly}</classifier>
                             <version>${version.hibernate.ogm}</version>
-                            <type>zip</type>
-                            <overWrite>false</overWrite>
-                            <outputDirectory>${jboss.home}/modules</outputDirectory>
-                        </artifactItem>
-
-                        <!-- Infinispan modules -->
-                        <artifactItem>
-                            <groupId>org.infinispan</groupId>
-                            <artifactId>infinispan-wildfly-modules</artifactId>
-                            <version>9.2.0.Beta2</version>
                             <type>zip</type>
                             <overWrite>false</overWrite>
                             <outputDirectory>${jboss.home}/modules</outputDirectory>

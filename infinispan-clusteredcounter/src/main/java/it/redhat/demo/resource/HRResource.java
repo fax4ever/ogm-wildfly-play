@@ -11,6 +11,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
+import org.slf4j.Logger;
+
+import it.redhat.demo.entity.JobPosition;
+import it.redhat.demo.entity.Person;
 import it.redhat.demo.repo.JobRepo;
 import it.redhat.demo.repo.PersonRepo;
 
@@ -19,6 +23,9 @@ import it.redhat.demo.repo.PersonRepo;
  */
 @Path("/")
 public class HRResource {
+
+	@Inject
+	private Logger log;
 
 	@Inject
 	private PersonRepo personRepo;
@@ -34,8 +41,11 @@ public class HRResource {
 	@POST
 	public void insertValues() {
 
-		personRepo.add( "Fabio Massimo", "Ercoli" );
-		jobRepo.add( "Domain Designer", "HR Evaluation" );
+		Person person = personRepo.add( "Fabio Massimo", "Ercoli" );
+		JobPosition jobPosition = jobRepo.add( "Domain Designer", "HR Evaluation" );
+
+		log.info( "Created new Person: {}", person );
+		log.info( "Created new Job Position: {}", jobPosition );
 
 	}
 
