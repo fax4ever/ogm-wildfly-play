@@ -1,4 +1,4 @@
-package it.redhat.demo.entity;
+package it.redhat.demo.domain.person;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +29,10 @@ public class Person {
 	public Person(String name, String surname) {
 		this.name = name;
 		this.surname = surname;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	@Override

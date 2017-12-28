@@ -39,6 +39,9 @@
 
         <!-- managed server directories -->
         <jboss.home>${project.build.directory}/wildfly-${version.wildfly}</jboss.home>
+
+        <!-- Skipping enforcer plug-in as AS/Arquillian cause several dependency convergence issues -->
+        <enforcer.skip>true</enforcer.skip>
     </properties>
 
     <dependencyManagement>
@@ -98,6 +101,24 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-managed</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-api</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

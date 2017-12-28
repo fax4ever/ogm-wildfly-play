@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Built-By: fabio
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_101
+Dependencies: org.hibernate.ogm:5.2 services, org.hibernate.ogm.infini
+ span-embedded:5.2 services
+

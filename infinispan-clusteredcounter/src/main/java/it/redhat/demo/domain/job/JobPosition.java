@@ -4,7 +4,7 @@
  * License: GNU Lesser General Public License (LGPL), version 2.1 or later
  * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
  */
-package it.redhat.demo.entity;
+package it.redhat.demo.domain.job;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,6 +35,10 @@ public class JobPosition {
 	public JobPosition(String title, String status) {
 		this.title = title;
 		this.status = status;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	@Override

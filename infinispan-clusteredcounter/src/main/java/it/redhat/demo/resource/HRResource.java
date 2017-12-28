@@ -13,10 +13,10 @@ import javax.ws.rs.Path;
 
 import org.slf4j.Logger;
 
-import it.redhat.demo.entity.JobPosition;
-import it.redhat.demo.entity.Person;
-import it.redhat.demo.repo.JobRepo;
-import it.redhat.demo.repo.PersonRepo;
+import it.redhat.demo.domain.job.JobPosition;
+import it.redhat.demo.domain.person.Person;
+import it.redhat.demo.domain.job.JobRepo;
+import it.redhat.demo.domain.person.PersonRepo;
 
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
