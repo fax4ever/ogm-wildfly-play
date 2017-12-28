@@ -1,4 +1,4 @@
-package it.redhat.demo.it;
+package it.redhat.demo.it.sequence;
 
 import javax.inject.Inject;
 
@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 
 import it.redhat.demo.domain.job.JobPosition;
 import it.redhat.demo.domain.job.JobRepo;
+import it.redhat.demo.domain.person.Person;
+import it.redhat.demo.domain.person.PersonRepo;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,14 +23,14 @@ import static org.junit.Assert.assertEquals;
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
  */
 @RunWith(Arquillian.class)
-public class JobIT {
+public class SequenceGeneratorIT {
 
 	@Deployment
 	public static WebArchive create() {
 		return ShrinkWrap
 			.create(WebArchive.class, "clusteredcounter-demo.war")
 			.addPackages(false, "it.redhat.demo.cdi")
-			.addPackages(false, "it.redhat.demo.domain.job")
+			.addPackages(false, "it.redhat.demo.domain.person")
 			.addAsResource("META-INF/persistence.xml")
 			.addAsManifestResource("MANIFEST.MF");
 	}
@@ -37,16 +39,14 @@ public class JobIT {
 	private Logger log;
 
 	@Inject
-	private JobRepo repo;
+	private PersonRepo repo;
 
 	@Test
 	public void test() {
 
-		JobPosition job = repo.add( "Domain Designer", "HR Evaluation" );
-
-		log.info( "New Job created: {}", job );
-
-		assertEquals(new Long( 2 ), job.getId());
+		Person person = repo.add( "Fabio", "Ercoli" );
+		log.info( "New Person created: {}", person );
+		assertEquals(new Long( 1 ), person.getId());
 
 	}
 
