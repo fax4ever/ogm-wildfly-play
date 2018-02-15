@@ -11,9 +11,6 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
-import org.infinispan.protostream.annotations.ProtoDoc;
-import org.infinispan.protostream.annotations.ProtoField;
-
 /**
  * @author Fabio Massimo Ercoli
  */
@@ -22,6 +19,8 @@ import org.infinispan.protostream.annotations.ProtoField;
 public class Project implements Serializable {
 
 	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name="uuid", strategy="uuid2")
 	private String id;
 
 	@Field(analyze = Analyze.NO)

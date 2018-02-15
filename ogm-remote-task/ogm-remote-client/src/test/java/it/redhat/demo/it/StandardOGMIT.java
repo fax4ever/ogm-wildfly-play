@@ -7,6 +7,9 @@
 package it.redhat.demo.it;
 
 import java.io.File;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.UserTransaction;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +18,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+
+import it.redhat.demo.entity.Project;
 
 /**
  * @author Fabio Massimo Ercoli
@@ -32,8 +37,31 @@ public class StandardOGMIT {
 				.addAsWebInfResource(new File( "src/main/webapp/WEB-INF/jboss-deployment-structure.xml"));
 	}
 
+	@Inject
+	private EntityManager em;
+
+	@Inject
+	private UserTransaction utx;
+
 	@Test
-	public void test() {
+	public void test() throws Exception {
+
+		utx.begin();
+
+		try {
+			Project entity = new Project();
+
+			entity.setName( "Hibernate OGM" );
+			entity.setCode( 777 );
+			entity.setDescription( "Your NoSQL datastores. One API. - Hibernate OGM" );
+
+			em.persist( entity );
+
+			utx.commit();
+		} catch (RuntimeException ex) {
+			utx.rollback();
+			throw ex;
+		}
 
 
 	}
