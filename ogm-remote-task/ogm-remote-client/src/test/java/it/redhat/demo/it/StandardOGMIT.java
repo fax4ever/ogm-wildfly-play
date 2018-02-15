@@ -17,12 +17,14 @@ import org.junit.runner.RunWith;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.TargetsContainer;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import it.redhat.demo.entity.Project;
+import it.redhat.demo.ogm.RegisterClassMarshallerServer;
 
 /**
  * @author Fabio Massimo Ercoli
@@ -58,7 +60,17 @@ public class StandardOGMIT {
 	@Inject
 	private UserTransaction utx;
 
+	@Inject
+	private RegisterClassMarshallerServer registerClassMarshallerServer;
+
 	@Test
+	@InSequence(1)
+	public void initServer() throws Exception {
+		registerClassMarshallerServer.execute();
+	}
+
+	@Test
+	@InSequence(2)
 	public void test() throws Exception {
 
 		utx.begin();

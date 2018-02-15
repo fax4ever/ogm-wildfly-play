@@ -6,6 +6,9 @@ import org.infinispan.tasks.ServerTask;
 import org.infinispan.tasks.TaskContext;
 import org.infinispan.tasks.TaskExecutionMode;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.redhat.demo.remote.marshaller.ProtostreamIdMarshaller;
 import it.redhat.demo.remote.marshaller.ProtostreamPayloadMarshaller;
 
@@ -13,6 +16,8 @@ import it.redhat.demo.remote.marshaller.ProtostreamPayloadMarshaller;
  * @author Fabio Massimo Ercoli
  */
 public class AddProtobufTask implements ServerTask {
+
+	private static final Logger LOG = LoggerFactory.getLogger( AddProtobufTask.class );
 
 	private TaskContext ctx;
 
@@ -33,8 +38,10 @@ public class AddProtobufTask implements ServerTask {
 		ProtobufMetadataManager protobufMetadataManager =
 				cm.getGlobalComponentRegistry().getComponent(ProtobufMetadataManager.class);
 
-		protobufMetadataManager.registerMarshaller(new ProtostreamIdMarshaller());
-		protobufMetadataManager.registerMarshaller( new ProtostreamPayloadMarshaller());
+		protobufMetadataManager.registerMarshaller( new ProtostreamIdMarshaller() );
+		protobufMetadataManager.registerMarshaller( new ProtostreamPayloadMarshaller() );
+
+		LOG.info( "Marshaller registered!" );
 
 		return null;
 	}
