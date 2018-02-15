@@ -11,6 +11,7 @@
 
     <modules>
         <module>ogm-remote-client</module>
+        <module>ogm-remote-server</module>
     </modules>
 
 </project>

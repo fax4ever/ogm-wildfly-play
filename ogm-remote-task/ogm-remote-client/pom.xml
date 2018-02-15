@@ -252,6 +252,30 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>update-infinispan-config</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${infinispan.home}/standalone/configuration</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/test/resources/infinispan-server/config</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.20</version>
                 <executions>

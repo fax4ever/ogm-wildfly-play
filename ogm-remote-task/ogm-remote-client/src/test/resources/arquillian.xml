@@ -17,6 +17,7 @@
         <property name="jbossHome">${infinispan.home}</property>
         <property name="managementPort">10140</property>
         <property name="javaVmArguments">-XX:MaxPermSize=512m -Djava.net.preferIPv4Stack=true -XX:+IgnoreUnrecognizedVMOptions -Djboss.socket.binding.port-offset=150</property>
+        <property name="serverConfig">standalone-compatibity.xml</property>
         <property name="waitForPorts">11372</property>
       </configuration>
     </container>
