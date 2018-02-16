@@ -251,6 +251,24 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
                 <executions>
+
+                    <execution>
+                        <id>update-jboss-config</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${jboss.home}/standalone/configuration</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/test/resources/jboss-server/config</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
                     <execution>
                         <id>update-infinispan-config</id>
                         <phase>process-test-resources</phase>
@@ -267,6 +285,7 @@
                             </resources>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
 
