@@ -166,8 +166,8 @@
                 <local-cache name="default"/>
                 <local-cache name="namedCache"/>
                 <local-cache name="Project">
-                    <!-- The idea is to enable the compatibility mode on cache used by OGM - and remove the comment -->
-                    <!-- <compatibility enabled="true" marshaller="org.infinispan.query.remote.CompatibilityProtoStreamMarshaller"/> -->
+                    <!-- The idea is to enable the compatibility mode on cache used by OGM -->
+                    <compatibility enabled="true" marshaller="org.infinispan.query.remote.CompatibilityProtoStreamMarshaller"/>
                     <locking acquire-timeout="30000" concurrency-level="1000" striping="false"/>
                     <transaction mode="NON_XA" locking="PESSIMISTIC"/>
                 </local-cache>

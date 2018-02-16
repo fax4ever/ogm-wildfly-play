@@ -24,7 +24,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import it.redhat.demo.entity.Project;
-import it.redhat.demo.ogm.RegisterClassMarshallerServer;
+import it.redhat.demo.ogm.ConfigureServer;
 
 /**
  * @author Fabio Massimo Ercoli
@@ -61,12 +61,13 @@ public class StandardOGMIT {
 	private UserTransaction utx;
 
 	@Inject
-	private RegisterClassMarshallerServer registerClassMarshallerServer;
+	private ConfigureServer configureServer;
 
 	@Test
 	@InSequence(1)
 	public void initServer() throws Exception {
-		registerClassMarshallerServer.execute();
+
+		configureServer.config();
 	}
 
 	@Test
@@ -89,8 +90,6 @@ public class StandardOGMIT {
 			utx.rollback();
 			throw ex;
 		}
-
-
 	}
 
 }

@@ -32,9 +32,6 @@
         <!-- managed server directories -->
         <jboss.home>${project.build.directory}/wildfly-${version.wildfly}</jboss.home>
         <infinispan.home>${project.build.directory}/infinispan-server-${version.infinispan}</infinispan.home>
-
-        <!-- commons -->
-        <commons-lang3.version>3.6</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -110,12 +107,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
         </dependency>
 
         <!-- Log -->
