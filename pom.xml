@@ -28,6 +28,7 @@
     <modules>
         <module>infinispan-clusteredcounter</module>
         <module>ogm-remote-task</module>
+        <module>ogm-feature-pack-demo</module>
     </modules>
 
     <properties>
