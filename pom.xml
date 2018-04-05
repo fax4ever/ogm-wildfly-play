@@ -29,6 +29,7 @@
         <module>infinispan-clusteredcounter</module>
         <module>ogm-remote-task</module>
         <module>ogm-feature-pack-demo</module>
+        <module>ogm-feature-pack-infinispan-embedded-demo</module>
     </modules>
 
     <properties>
@@ -37,5 +38,18 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

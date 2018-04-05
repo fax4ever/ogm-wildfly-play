@@ -8,7 +8,7 @@
 
 		<feature-pack
 			groupId="org.hibernate.ogm"
-			artifactId="hibernate-ogm-featurepack-infinispan-remote"
+			artifactId="hibernate-ogm-featurepack-infinispan-embedded"
 			version="5.4.0-SNAPSHOT" />
 
 	</feature-packs>

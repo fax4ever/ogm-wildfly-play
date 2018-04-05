@@ -9,7 +9,7 @@
         <artifactId>ogm-wildfly-play</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>ogm-feature-pack-demo</artifactId>
+    <artifactId>ogm-feature-pack-infinispan-embedded-demo</artifactId>
     <packaging>war</packaging>
 
     <properties>
@@ -19,13 +19,11 @@
         <maven.compiler.source>1.8</maven.compiler.source>
 
         <version.hibernate.ogm>5.4.0-SNAPSHOT</version.hibernate.ogm>
-        <version.infinispan>9.2.0.Final</version.infinispan>
         <version.wildfly>12.0.0.Final</version.wildfly>
         <version.jpa22patch>1.0.0.Beta2</version.jpa22patch>
 
         <!-- managed server directories -->
         <wildfly.home>${project.build.directory}/wildfly-server</wildfly.home>
-        <infinispan.home>${project.build.directory}/infinispan-server</infinispan.home>
 
         <!-- patch -->
         <jpa22patch.filename>hibernate-jpa-api-2.2-wildflymodules-${version.jpa22patch}-wildfly-${version.wildfly}-patch.zip</jpa22patch.filename>
@@ -54,7 +52,7 @@
     <dependencies>
         <dependency>
             <groupId>org.hibernate.ogm</groupId>
-            <artifactId>hibernate-ogm-infinispan-remote</artifactId>
+            <artifactId>hibernate-ogm-infinispan-embedded</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -128,22 +126,11 @@
                             <server-name>wildfly-server</server-name>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>infinispan-server-provisioning</id>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                        <phase>compile</phase>
-                        <configuration>
-                            <config-file>infinispan-server-provisioning.xml</config-file>
-                            <server-name>infinispan-server</server-name>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
 
             <plugin>
-            <artifactId>maven-dependency-plugin</artifactId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>fetch-jpa-patch</id>
