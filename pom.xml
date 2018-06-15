@@ -30,6 +30,7 @@
         <module>ogm-remote-task</module>
         <module>ogm-feature-pack-demo</module>
         <module>ogm-feature-pack-infinispan-embedded-demo</module>
+        <module>hibernate-ogm-wildfly-mongodb-play</module>
     </modules>
 
     <properties>
