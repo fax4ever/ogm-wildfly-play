@@ -22,6 +22,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 import it.redhat.demo.entity.Message;
 import it.redhat.demo.service.MessageService;
+import it.redhat.demo.service.MongoDataService;
 
 /**
  * @author Fabio Massimo Ercoli
@@ -41,6 +42,9 @@ public class MessageServiceIT {
 	@Inject
 	private MessageService testSubject;
 
+	@Inject
+	private MongoDataService dataService;
+
 	@Test
 	public void test() throws Exception {
 
@@ -50,5 +54,10 @@ public class MessageServiceIT {
 		assertNotNull( message );
 		assertEquals( "favio", message.getUser() );
 		assertEquals( "I'm favio!", message.getBody() );
+	}
+
+	@Test
+	public void playWithWildflyNosql() {
+		dataService.createDropCollection();
 	}
 }
