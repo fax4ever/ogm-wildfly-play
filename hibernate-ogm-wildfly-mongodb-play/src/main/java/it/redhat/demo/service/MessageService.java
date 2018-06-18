@@ -21,5 +21,4 @@ public class MessageService {
 	public Message getMessage(String id) {
 		return em.find( Message.class, id );
 	}
-
 }

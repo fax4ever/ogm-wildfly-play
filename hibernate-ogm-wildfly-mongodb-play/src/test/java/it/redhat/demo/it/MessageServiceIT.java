@@ -50,7 +50,5 @@ public class MessageServiceIT {
 		assertNotNull( message );
 		assertEquals( "favio", message.getUser() );
 		assertEquals( "I'm favio!", message.getBody() );
-
 	}
-
 }
