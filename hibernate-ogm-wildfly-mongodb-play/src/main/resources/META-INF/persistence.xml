@@ -6,11 +6,12 @@
   <persistence-unit name="primary" transaction-type="JTA">
     <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
     <properties>
-      <property name="jboss.as.jpa.providerModule" value="org.hibernate:5.3"/>
       <property name="hibernate.ogm.datastore.provider" value="mongodb" />
       <property name="hibernate.ogm.datastore.create_database" value="true"/>
       <property name="hibernate.ogm.datastore.database" value="mongodb"/>
       <property name="hibernate.ogm.datastore.host" value="localhost:27018"/>
+      <property name="hibernate.search.default.directory_provider" value="ram"/>
+      <property name="wildfly.jpa.hibernate.search.module" value="org.hibernate.search.orm:5.10.0.Final"/>
     </properties>
   </persistence-unit>
 </persistence>

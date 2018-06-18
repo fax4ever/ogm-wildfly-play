@@ -16,13 +16,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
 
         <!-- WildFly Application Server -->
-        <wildfly.version>12.0.0.Final</wildfly.version>
+        <wildfly.version>13.0.0.Final</wildfly.version>
         <wildfly.name>wildfly-${wildfly.version}</wildfly.name>
         <wildfly.home>${project.build.directory}/${wildfly.name}</wildfly.home>
-
-        <!-- JPA 2.2 patch -->
-        <jpa22patch.version>1.0.0.Beta2</jpa22patch.version>
-        <jpa22patch.filename>hibernate-jpa-api-2.2-wildflymodules-${jpa22patch.version}-wildfly-${wildfly.version}-patch.zip</jpa22patch.filename>
 
         <!-- WildFly NoSql -->
         <wildfly.nosql.version>1.0.0.Alpha6</wildfly.nosql.version>
@@ -167,54 +163,6 @@
                     <!--</execution>-->
                 <!--</executions>-->
             <!--</plugin>-->
-
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>fetch-jpa-patch</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.hibernate.javax.persistence</groupId>
-                                    <artifactId>hibernate-jpa-api-2.2-wildflymodules</artifactId>
-                                    <classifier>wildfly-${wildfly.version}-patch</classifier>
-                                    <version>${jpa22patch.version}</version>
-                                    <type>zip</type>
-                                    <outputDirectory>${project.build.directory}</outputDirectory>
-                                    <overWrite>true</overWrite>
-                                    <destFileName>${jpa22patch.filename}</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>apply-jpa22-patch</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>execute-commands</goal>
-                        </goals>
-                        <configuration>
-                            <offline>true</offline>
-                            <jbossHome>${wildfly.home}</jbossHome>
-                            <commands>
-                                <command>patch apply --override-all ${project.build.directory}/${jpa22patch.filename}</command>
-                            </commands>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>

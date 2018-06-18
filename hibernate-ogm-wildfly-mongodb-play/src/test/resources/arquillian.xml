@@ -6,10 +6,7 @@
     <container qualifier="wildfly" default="true">
         <configuration>
             <property name="jbossHome">${wildfly.home}</property>
-            <property name="javaVmArguments">-XX:MaxPermSize=512m -Djava.net.preferIPv4Stack=true -XX:+IgnoreUnrecognizedVMOptions -Dee8.preview.mode=true
-                <!-- -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y-->
-            </property>
-            <property name="serverConfig">standalone.xml</property>
+            <property name="javaVmArguments">-XX:MaxPermSize=512m -Djava.net.preferIPv4Stack=true -XX:+IgnoreUnrecognizedVMOptions -Dee8.preview.mode=true</property>
         </configuration>
     </container>
 
