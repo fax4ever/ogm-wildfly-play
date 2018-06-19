@@ -8,7 +8,6 @@
     <properties>
       <property name="hibernate.ogm.datastore.provider" value="mongodb" />
       <property name="hibernate.connection.resource" value="java:jboss/mongodb/client"/>
-      <property name="hibernate.ogm.datastore.database" value="requiredButNotUsedInThisScenario"/>
       <property name="hibernate.ogm.datastore.create_database" value="true"/>
     </properties>
   </persistence-unit>
