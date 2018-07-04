@@ -21,7 +21,7 @@
         <wildfly.home>${project.build.directory}/${wildfly.name}</wildfly.home>
 
         <!-- WildFly NoSql -->
-        <wildfly.nosql.version>1.0.0.Alpha6</wildfly.nosql.version>
+        <wildfly.nosql.version>1.0.0.Beta1</wildfly.nosql.version>
 
         <!-- Hibernate OGM -->
         <!-- FIXME: waiting for 5.4.0.FINAL -->
